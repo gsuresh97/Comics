@@ -1,5 +1,6 @@
 package com.example.gopisuresh.comics;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -13,10 +14,10 @@ import java.util.ArrayList;
 /**
  * Created by Gopisuresh on 3/18/16.
  */
-public class RetrieveOptions extends AsyncTask<String, Object, ArrayList<ComicOption>> {
+public class RetrieveOptions extends AsyncTask<URL, Object, Bitmap> {
 
     @Override
-    protected ArrayList<ComicOption> doInBackground(String... url){
+    protected Bitmap doInBackground(URL... url){
         if(android.os.Debug.isDebuggerConnected())
             android.os.Debug.waitForDebugger();
 

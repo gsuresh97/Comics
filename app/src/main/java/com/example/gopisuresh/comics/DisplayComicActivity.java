@@ -7,11 +7,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import java.net.URL;
 
 public class DisplayComicActivity extends AppCompatActivity {
-
+    URL page;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +21,15 @@ public class DisplayComicActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         String url = intent.getStringExtra(MyActivity.EXTRA_MESSAGE);
-        URL page;
+
+        try{
+            page = new URL(url);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        TextView tv = (TextView) findViewById(R.id.comic_response);
+        tv.setText(url);
 
     }
 

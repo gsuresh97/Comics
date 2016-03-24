@@ -18,9 +18,9 @@ import java.util.ArrayList;
  */
 public class CustomAdapter extends BaseAdapter {
     ArrayList<ComicOption> list;
-    Context context;
+    MyActivity context;
     static LayoutInflater infl;
-    public CustomAdapter(Activity act, ArrayList<ComicOption> l){
+    public CustomAdapter(MyActivity act, ArrayList<ComicOption> l){
         context = act;
         list = l;
         infl = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -45,17 +45,22 @@ public class CustomAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
         Holder cell = new Holder();
-        View rowView;
+        final View rowView;
         rowView = infl.inflate(R.layout.custom_list, null);
         cell.image = (ImageView)rowView.findViewById(R.id.image_view_1);
         cell.author = (TextView)rowView.findViewById(R.id.author);
         cell.title = (TextView)rowView.findViewById(R.id.title);
 
-        Bitmap ic = list.get(position).getIcon();
-        list.get(position).setIcon(Bitmap.createScaledBitmap(ic, ic.getWidth()*2, ic.getHeight()*2, true));
         cell.image.setImageBitmap(list.get(position).getIcon());
         cell.title.setText(list.get(position).getTitle());
         cell.author.setText(list.get(position).getAuthor());
+
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.open_comic(rowView, list.get(position));
+            }
+        });
 
         return rowView;
     }
