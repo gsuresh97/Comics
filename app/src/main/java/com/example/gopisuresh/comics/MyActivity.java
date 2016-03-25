@@ -81,7 +81,7 @@ public class MyActivity extends AppCompatActivity {
     public void open_comic(View view, ComicOption co) {
         Intent intent = new Intent(this, DisplayComicActivity.class);
         //get the url to the comic here by using findViewByID of the option that was chosen an put it in the string below
-        String url = "http://www.gocomics.com" + co.getURL();
+        String url = co.getURL();
 
         intent.putExtra(EXTRA_MESSAGE, url);
         startActivity(intent);

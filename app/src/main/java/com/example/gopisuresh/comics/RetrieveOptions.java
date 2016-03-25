@@ -1,6 +1,7 @@
 package com.example.gopisuresh.comics;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -14,21 +15,27 @@ import java.util.ArrayList;
 /**
  * Created by Gopisuresh on 3/18/16.
  */
-public class RetrieveOptions extends AsyncTask<URL, Object, Bitmap> {
-
+public class RetrieveOptions extends AsyncTask<URL, Object, Panel> {
+    HttpURLConnection connection;
+    Bitmap comic;
+    InputStream inStream;
+    String comicURL;
+    String nextURL = null;
+    String prevURL = null;
+    String beginURL = null;
+    String endURL = null;
     @Override
-    protected Bitmap doInBackground(URL... url){
+    protected Panel doInBackground(URL... url){
         if(android.os.Debug.isDebuggerConnected())
             android.os.Debug.waitForDebugger();
 
         URL comicList;
-        ArrayList<ComicOption> list = new ArrayList<>();
         try{
-            comicList = new URL(url[0]);
-            HttpURLConnection connection = (HttpURLConnection)comicList.openConnection();
+            comicList = url[0];
+            connection = (HttpURLConnection)comicList.openConnection();
             connection.setDoInput(true);
             //connection.connect();
-            InputStream inStream;
+
             int responseCode = connection.getResponseCode(); //can call this instead of con.connect()
             if (responseCode >= 400 && responseCode <= 499) {
                 Log.e("Cannot Connect", "Bad authentication status: " + responseCode + "\n");
@@ -38,37 +45,78 @@ public class RetrieveOptions extends AsyncTask<URL, Object, Bitmap> {
                 inStream = connection.getInputStream();
                 //etc...
             }
+            Log.v("msg", "Comic URL: " + comicList);
 
             Log.v("Internet: ", "This part reached\n");
             BufferedReader in = new BufferedReader(new InputStreamReader(inStream));
-
             String line;
-            String context;
-            String author;
+            comicURL = null;
+            boolean found = false;
+            int count = 0;
             while((line = in.readLine()) != null){
-                //Log.v("msg", line);
-                if (line.contains("height=\"60\"")){
-                    context = line;
-                    //Log.v("msg", "Image line found");
-                    int count = 1;
-                    while (!line.contains("author")){
-                        //Log.v("msg", "Pass " + count + " of loop.");
-                        line = in.readLine();
-                        count++;
-                        //Log.v("msg", line);
-                    }
-                    author = line;
-                    list.add(new ComicOption(context, author));
+                Log.v("msg", line);
+                if(line.contains("adamathome/")){
+                    Log.v("msg", "");
                 }
-                //Log.v("msg", "Processed");
+                count++;
+                if (line.contains("assets.amuni") && line.contains("src=")){
+                    int start = line.indexOf("src=") + 5;
+                    int end = line.substring(start).indexOf('"') + start;
+                    comicURL = line.substring(start, end);
+                    found = true;
+                    Log.v("msg", "Start: " + start + "\tEnd: " + end + "\t" + comicURL);
+                }
+                if(line.contains("eginning")){
+                    int start = line.indexOf("=") + 2;
+                    int end = line.substring(start).indexOf('"') + start;
+                    beginURL = line.substring(start, end);
+                }
+                if(line.contains("older")){
+                    int start = line.indexOf("f=") + 3;
+                    int end = line.substring(start).indexOf('"') + start;
+                    prevURL = "http://www.gocomics.com" + line.substring(start, end);
+                    Log.v("msg", "Previous URL: " + prevURL);
+                }
+                if(line.contains("Newer")){
+                    int start = line.indexOf("f=") + 3;
+                    int end = line.substring(start).indexOf('"') + start;
+                    nextURL = "http://www.gocomics.com" + line.substring(start, end);
+                }
+                if(line.contains("urrent")){
+                    int start = line.indexOf("=") + 2;
+                    int end = line.substring(start).indexOf('"') + start;
+                    endURL = line.substring(start, end);
+                }
+            }
+
+            //Log.v("msg", "Comic URL: " + comicURL);
+            URL cURL = new URL(comicURL);
+            connection = (HttpURLConnection)cURL.openConnection();
+            connection.setDoInput(true);
+            responseCode = connection.getResponseCode(); //can call this instead of con.connect()
+            if (responseCode >= 400 && responseCode <= 499) {
+                Log.e("Cannot Connect", "Bad authentication status: " + responseCode + "\n");
+                throw new Exception("Bad authentication status: " + responseCode); //provide a more meaningful exception message
+            }
+            else {
+                inStream = connection.getInputStream();
+                comic = BitmapFactory.decodeStream(inStream);
             }
 
         } catch (Exception e) {
             String s = e.getMessage();
-            Log.d("msg", e.getMessage());
+            //Log.d("msg", e.getMessage());
             e.printStackTrace();
         }
-        return list;
+        Panel p = new Panel();
+        p.pic = comic;
+        p.url = comicURL;
+        p.next = nextURL;
+        p.prev = prevURL;
+        p.beginning = beginURL;
+        p.end = endURL;
+
+        return p;
     }
 
 

@@ -6,4 +6,8 @@
     <string name="comic_name">Big Nate</string>
     <string name="title_activity_display_message">My Message</string>
     <string name="title_activity_display_comic">Comic</string>
+    <string name="prev">Previous</string>
+    <string name="next">Next</string>
+    <string name="newest">Newest</string>
+    <string name="oldest">Oldest</string>
 </resources>

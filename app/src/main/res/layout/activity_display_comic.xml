@@ -8,15 +8,44 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.gopisuresh.comics.DisplayComicActivity"
-    tools:showIn="@layout/activity_display_comic">
-
-    -->
-    <TextView
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <ImageView
         android:id="@+id/comic_response"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <!--<Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/oldest"
+            android:onClick="oldest"/>-->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/prev"
+            android:onClick="prev"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/next"
+            android:onClick="next"/>
+        <!--<Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/newest"
+            android:onClick="newest"/>-->
+    </LinearLayout>
 </LinearLayout>
+
+
+
