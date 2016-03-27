@@ -1,6 +1,9 @@
 package com.example.gopisuresh.comics;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,8 +28,10 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class MyActivity extends AppCompatActivity {
-    public final static String EXTRA_MESSAGE = "com.example.gopisuresh.comics.MESSAGE";
+public class MyActivity extends Activity {
+    public final static String COMIC_URL = "com.example.gopisuresh.comics.COMICURL";
+    public final static String COMIC_NAME = "com.example.gopisuresh.comics.COMICNAME";
+
     ListView listView;
     CustomAdapter comics;
     ArrayList<ComicOption> list;
@@ -32,21 +39,10 @@ public class MyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
-        /*RetrieveOptions ro = new RetrieveOptions();
-        ro.execute("http://www.gocomics.com/explore/espanol");
-        //ro.execute("http://gocomics.com/features");
-
-        try {
-            list = ro.get();
-        } catch(Exception e){
-            String x = e.toString();
-            Log.d("msg", e.getMessage());
-            e.printStackTrace();
-
-        }*/
-
         list = new ArrayList<>();
         in = null;
         try{
@@ -72,10 +68,6 @@ public class MyActivity extends AppCompatActivity {
 
         listView.setAdapter(comics);
 
-
-
-        //Button button = (Button) findViewById(R.id.comic_button);
-
     }
 
     public void open_comic(View view, ComicOption co) {
@@ -83,7 +75,8 @@ public class MyActivity extends AppCompatActivity {
         //get the url to the comic here by using findViewByID of the option that was chosen an put it in the string below
         String url = co.getURL();
 
-        intent.putExtra(EXTRA_MESSAGE, url);
+        intent.putExtra(COMIC_URL, url);
+        intent.putExtra(COMIC_NAME, co.getTitle());
         startActivity(intent);
     }
 

@@ -12,4 +12,5 @@ public class Panel {
     String next;
     String beginning;
     String end;
+    String current;
 }

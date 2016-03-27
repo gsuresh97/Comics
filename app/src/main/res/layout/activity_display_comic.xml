@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="#efeded"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -9,6 +10,16 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <TextView
+        android:id="@+id/title"
+        android:textSize="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/date"
+        android:textSize="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <ImageView
         android:id="@+id/comic_response"
         android:layout_width="match_parent"
@@ -20,30 +31,41 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <!--<Button
+        <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/oldest"
-            android:onClick="oldest"/>-->
-        <Button
+            android:src="@drawable/sfirst"
+            android:background="@null"
+            android:onClick="oldest" />
+        <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/prev"
+            android:src="@drawable/sprev"
+            android:background="@null"
             android:onClick="prev"/>
-        <Button
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/scalendar"
+            android:background="@null"
+            android:onClick="pick_date"/>
+        <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/next"
+            android:src="@drawable/snext"
+            android:background="@null"
             android:onClick="next"/>
-        <!--<Button
+        <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/newest"
-            android:onClick="newest"/>-->
+            android:src="@drawable/slast"
+            android:background="@null"
+            android:onClick="newest"/>
+
     </LinearLayout>
 </LinearLayout>
 

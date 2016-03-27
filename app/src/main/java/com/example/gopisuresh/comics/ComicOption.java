@@ -73,7 +73,7 @@ public class ComicOption {
                 in = connection.getInputStream();
             }
             icon = BitmapFactory.decodeStream(in);
-            Bitmap bg1 = Bitmap.createScaledBitmap(icon, icon.getWidth()*3, icon.getHeight()*3, true);
+            Bitmap bg1 = Bitmap.createScaledBitmap(icon, 120, 120, true);
             icon  = bg1;
         }catch (Exception e){
             e.printStackTrace();
